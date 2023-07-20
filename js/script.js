@@ -1,40 +1,66 @@
-let carrito = "";
-let nuevoOperacion = false;
+// Array para almacenar las actividades
+const actividades = [];
 
-let actividad = prompt("Ingrese el nombre de la actividad que desea realizar: (Gimnasio ($4000 por mes), Natacion($4500 por mes), Zumba($3500 por mes), Funcional($3700 por mes)):");
-let cantidad = parseInt(prompt(`Ingrese la cantidad de meses de ${actividad} que desea completar:`));
+// Función para agregar una actividad
+function agregarActividad(nombre, precioPorMes) {
+    const actividad = { nombre, precioPorMes };
+    actividades.push(actividad);
+}
 
-function haceractividad(actividad, cantidad) {
-    do {
-        seleccionarActividad(actividad, cantidad);
-        nuevoOperacion = confirm("¿Desea ejercer otro tipo de actividad?");
-        if (nuevoOperacion) {
-            actividad = prompt("Ingrese el nombre de la actividad que desea realizar: (Gimnasio ($4000 por mes), Natacion($4500 por mes), Zumba($3500 por mes), Funcional($3700 por mes)):");
-            cantidad = parseInt(prompt(`Ingrese la cantidad de meses de ${actividad} que desea completar:`));
+// Función para calcular el total de las actividades que seleccionaste
+function calcularCostoTotal() {
+    let costoTotal = 0;
+    for (const actividad of actividades) {
+        if (actividad.seleccionada) {
+            costoTotal += actividad.precioPorMes * actividad.meses;
         }
-    } while (nuevoOperacion);
-
-    alert(carrito);
-}
-
-function seleccionarActividad(actividad, cantidad) {
-    switch (actividad.toLowerCase()) {
-        case "gimnasio":
-            carrito += `Podras hacer Gimnasio durante ${cantidad} meses y tu precio total sera de: $ ${4000 * cantidad} \n`;
-            break;
-        case "natacion":
-            carrito += `Podras hacer Natacion durante ${cantidad} meses y tu precio total sera de: $ ${4500 * cantidad} \n`;
-            break;
-        case "zumba":
-            carrito += `Podras hacer Zumba durante ${cantidad} meses y tu precio total sera de:  $ ${3500 * cantidad} \n`;
-            break;
-        case "funcional":
-            carrito += `Podras hacer Funcional durante ${cantidad} meses y tu precio total sera de: $ ${3700 * cantidad} \n`;
-            break;
-        default:
-            alert("La actividad ingresada no está disponible hasta el momento. Las actividades que le podemos ofrecer son gimnasio, natacion, zumba y funcional. Gracias");
-            break;
     }
+    return costoTotal;
 }
 
-haceractividad(actividad, cantidad);
+// Función para mostrar las actividades disponibles
+function mostrarActividadesDisponibles() {
+    alert("Actividades disponibles:");
+    actividades.forEach((actividad, index) => {
+        alert(`${index + 1}. ${actividad.nombre} ($${actividad.precioPorMes} por mes)`);
+    });
+}
+
+// Función para mostrar el resumen de actividades seleccionadas y el costo total en un alert
+function mostrarResumen() {
+    let resumen = "Resumen de actividades:\n";
+    let costoTotal = 0;
+
+    actividades.forEach(actividad => {
+        if (actividad.seleccionada) {
+            resumen += `${actividad.nombre} - ${actividad.meses} meses - Costo: $${actividad.precioPorMes * actividad.meses}\n`;
+            costoTotal += actividad.precioPorMes * actividad.meses;
+        }
+    });
+
+    resumen += `\nCosto total: $${costoTotal}`;
+    alert(resumen);
+}
+
+// Agregar las actividades 
+agregarActividad("Gimnasio", 4000);
+agregarActividad("Natación", 4500);
+agregarActividad("Zumba", 3500);
+agregarActividad("Funcional", 3700);
+
+// Solicitar al usuario que elija las actividades y la cantidad de meses para cada una
+mostrarActividadesDisponibles();
+actividades.forEach(actividad => {
+    const seleccionada = window.confirm(`¿Desea realizar la actividad ${actividad.nombre}?`);
+    if (seleccionada) {
+        const meses = parseInt(prompt(`Ingrese la cantidad de meses que desea realizar ${actividad.nombre}:`));
+        actividad.seleccionada = true;
+        actividad.meses = meses;
+    } else {
+        actividad.seleccionada = false;
+    }
+});
+
+// Mostrar resumen de actividades y costo total
+mostrarResumen();
+
