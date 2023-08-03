@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const addButton = document.getElementById("addButton");
     const taskList = document.getElementById("taskList");
 
-    // Obtener tareas del localStorage al cargar la página
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
     function renderTasks() {
@@ -79,6 +78,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Renderizar las tareas al cargar la página
     renderTasks();
 });
