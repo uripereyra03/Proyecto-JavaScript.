@@ -1,4 +1,16 @@
 H1 {
-    color: rgb(136, 2, 2);
     text-align: center;
+}
+
+body {
+    background-image: url(/Img/Fondo2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
 }
